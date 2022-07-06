@@ -21,4 +21,9 @@ public class BookService {
                 new BookEntity(createBookRequestDTO.getTitle(), createBookRequestDTO.getAuthor(), createBookRequestDTO.getNumberOfPages()));
         return new BookResponseDTO(bookEntity.getId(), bookEntity.getTitle(), bookEntity.getAuthor(), bookEntity.getNumberOfPages());
     }
+
+    public BookResponseDTO find(Long id) {
+        BookEntity bookEntity = bookRepository.findById(id).orElseThrow(RuntimeException::new);
+        return new BookResponseDTO(bookEntity.getId(), bookEntity.getTitle(), bookEntity.getAuthor(), bookEntity.getNumberOfPages());
+    }
 }
