@@ -1,6 +1,7 @@
 package com.ks.library.endpoints;
 
 import com.ks.library.payloads.request.CreateBookRequestDTO;
+import com.ks.library.payloads.request.UpdateBookRequestDTO;
 import com.ks.library.payloads.response.BookResponseDTO;
 import com.ks.library.services.BookService;
 import io.swagger.annotations.Api;
@@ -40,6 +41,20 @@ public class BookEndpoint {
     @ApiOperation("Find all books")
     public ResponseEntity<List<BookResponseDTO>> findAll() {
         List<BookResponseDTO> bookResponseDTO = bookService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(bookResponseDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation("Delete book")
+    public ResponseEntity<BookResponseDTO> delete(@PathVariable Long id) {
+        BookResponseDTO bookResponseDTO = bookService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(bookResponseDTO);
+    }
+
+    @PutMapping()
+    @ApiOperation("Update book")
+    public ResponseEntity<BookResponseDTO> update(@RequestBody UpdateBookRequestDTO updateBookRequestDTO) {
+        BookResponseDTO bookResponseDTO = bookService.update(updateBookRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(bookResponseDTO);
     }
 }
