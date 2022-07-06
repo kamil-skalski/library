@@ -2,6 +2,7 @@ package com.ks.library.services;
 
 import com.ks.library.endpoints.BookEndpoint;
 import com.ks.library.entities.BookEntity;
+import com.ks.library.exeptions.BookExceptionSupplier;
 import com.ks.library.payloads.request.CreateBookRequestDTO;
 import com.ks.library.payloads.response.BookResponseDTO;
 import com.ks.library.repositories.BookRepository;
@@ -23,7 +24,7 @@ public class BookService {
     }
 
     public BookResponseDTO find(Long id) {
-        BookEntity bookEntity = bookRepository.findById(id).orElseThrow(RuntimeException::new);
+        BookEntity bookEntity = bookRepository.findById(id).orElseThrow(BookExceptionSupplier.bookNotFound(id));
         return new BookResponseDTO(bookEntity.getId(), bookEntity.getTitle(), bookEntity.getAuthor(), bookEntity.getNumberOfPages());
     }
 }
