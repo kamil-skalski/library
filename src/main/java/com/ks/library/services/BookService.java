@@ -8,6 +8,9 @@ import com.ks.library.payloads.response.BookResponseDTO;
 import com.ks.library.repositories.BookRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class BookService {
 
@@ -26,5 +29,12 @@ public class BookService {
     public BookResponseDTO find(Long id) {
         BookEntity bookEntity = bookRepository.findById(id).orElseThrow(BookExceptionSupplier.bookNotFound(id));
         return new BookResponseDTO(bookEntity.getId(), bookEntity.getTitle(), bookEntity.getAuthor(), bookEntity.getNumberOfPages());
+    }
+
+    public List<BookResponseDTO> findAll() {
+        return bookRepository.findAll()
+                .stream()
+                .map(item -> new BookResponseDTO(item.getId(), item.getTitle(), item.getAuthor(), item.getNumberOfPages()))
+                .collect(Collectors.toList());
     }
 }

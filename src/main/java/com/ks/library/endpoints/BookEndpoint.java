@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/books")
 @Api(tags = "Books")
@@ -31,6 +33,13 @@ public class BookEndpoint {
     @ApiOperation("Find book")
     public ResponseEntity<BookResponseDTO> find(@PathVariable Long id) {
         BookResponseDTO bookResponseDTO = bookService.find(id);
+        return ResponseEntity.status(HttpStatus.OK).body(bookResponseDTO);
+    }
+
+    @GetMapping()
+    @ApiOperation("Find all books")
+    public ResponseEntity<List<BookResponseDTO>> findAll() {
+        List<BookResponseDTO> bookResponseDTO = bookService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(bookResponseDTO);
     }
 }
