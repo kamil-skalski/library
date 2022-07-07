@@ -7,6 +7,7 @@ import com.ks.library.payloads.request.CreateBookRequestDTO;
 import com.ks.library.payloads.request.UpdateBookRequestDTO;
 import com.ks.library.payloads.response.BookResponseDTO;
 import com.ks.library.repositories.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +15,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookService {
-
-    private final BookRepository bookRepository;
-
-    public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    @Autowired
+    private BookRepository bookRepository;
 
     public BookResponseDTO create(CreateBookRequestDTO createBookRequestDTO) {
         BookEntity bookEntity = bookRepository.save(
